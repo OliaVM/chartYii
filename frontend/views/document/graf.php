@@ -21,7 +21,8 @@ $this->title = 'My Yii Application';
 					 'title' => ['text' => 'profit']
 				  ],
 				  'series' => [
-					 ['name' => 'Your profit', 'data' => $arrProfit],
+					 //['name' => 'Your profit', 'data' => $arrProfit],
+					 ['name' => 'Your balance', 'data' => $arrBalance],
 				  ]
 			   ]
 			]);

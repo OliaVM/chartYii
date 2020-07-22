@@ -78,23 +78,36 @@ class DocumentController extends Controller
             $nodesWithTr = $model->getNodes($table, "tr");
             $arrDate = [];
             $arrProfit = [];
-
+            $arrBalance = [];
+            $arrCheck = [];
             foreach ($nodesWithTr as $nodeWithTr) {
                 $nodesWithTd = $model->getNodes($nodeWithTr, "td");
 
                 $typeOperation = $nodesWithTd->item($model->numberType - 1)->nodeValue;
 
                 $nodeDate = $nodesWithTd->item($model->numberDate - 1);
+                $profit = 0;
                 if ($typeOperation !== $model->nameBuyStop && $nodeDate !== null && ($typeOperation == $model->nameBalance || $typeOperation == $model->nameBuy)) {
 
                     if ($typeOperation == $model->nameBalance) {
                         $nodeProfit = $nodesWithTd->item(4); 
+                        if ($nodesWithTr->item(3) === $nodeWithTr) {
+                            $balance = (float)(str_replace(' ', '', $nodeProfit->nodeValue));
+                            $balanceChange = (float) 0;
+                        } else {
+                            $balanceChange = (float)(str_replace(' ', '', $nodeProfit->nodeValue));
+                        }
+                        $arrCheck[] = (float)str_replace(' ', '', $nodeProfit->nodeValue);
                     } 
                     if ($typeOperation == $model->nameBuy) {
                         $nodeProfit = $nodesWithTd->item($model->numberProfit - 1);
+                        $balanceChange = (float)$nodeProfit->nodeValue;
                     }  
                     if ($nodeProfit !== null) {
-                        $arrProfit[] = (float)$nodeProfit->nodeValue;
+                        //$arrProfit[] = (float)$nodeProfit->nodeValue;
+                        //$profit = (float)$nodeProfit->nodeValue;
+                        $balance = $balance + $balanceChange;
+                        $arrBalance[] = $balance;
                         $arrDate[] = $nodeDate->nodeValue;
                     }   
                 }    
@@ -108,7 +121,9 @@ class DocumentController extends Controller
 
         return $this->render('graf', [
             'arrDate' => $arrDate, 
-            'arrProfit' => $arrProfit
+            'arrProfit' => $arrProfit,
+            'arrBalance' => $arrBalance,
+            'arrCheck' => $arrCheck
         ]); 
     }       
    
