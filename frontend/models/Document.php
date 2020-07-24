@@ -92,8 +92,12 @@ class Document extends Model
     }
 
     public function getNodes($doc, $tag) {
-        $nodes = $doc->getElementsByTagName($tag);
-        return $nodes;
+        if ($doc->getElementsByTagName($tag) !== null) {
+            $nodes = $doc->getElementsByTagName($tag);
+            return $nodes;
+        } else {
+            throw new \Exception("Eror file structure");
+        }    
     }
 
 }

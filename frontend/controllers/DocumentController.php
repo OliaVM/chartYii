@@ -72,20 +72,26 @@ class DocumentController extends Controller
             } else {
                 $doc = $model->getXmlDoc($text);    
             }
-            
+     
             $nodesWithTable = $model->getNodes($doc, "table");
             $table = $nodesWithTable->item(0);
+            if ($table == null) {
+                throw new \Exception("Eror file structure");
+            }
             $nodesWithTr = $model->getNodes($table, "tr");
             $arrDate = [];
             $arrProfit = [];
             $arrBalance = [];
             $arrCheck = [];
+            if ($nodesWithTr == null) {
+                throw new \Exception("Eror file structure");
+            }
             foreach ($nodesWithTr as $nodeWithTr) {
                 $nodesWithTd = $model->getNodes($nodeWithTr, "td");
-
+                
                 $typeOperation = $nodesWithTd->item($model->numberType - 1)->nodeValue;
-
                 $nodeDate = $nodesWithTd->item($model->numberDate - 1);
+
                 $profit = 0;
                 $a = ($typeOperation == $model->nameBalance || $typeOperation == $model->nameBuy || $typeOperation == $model->nameSell);
                 if ($typeOperation !== $model->nameBuyStop && $nodeDate !== null && $a) {
