@@ -87,7 +87,8 @@ class DocumentController extends Controller
 
                 $nodeDate = $nodesWithTd->item($model->numberDate - 1);
                 $profit = 0;
-                if ($typeOperation !== $model->nameBuyStop && $nodeDate !== null && ($typeOperation == $model->nameBalance || $typeOperation == $model->nameBuy)) {
+                $a = ($typeOperation == $model->nameBalance || $typeOperation == $model->nameBuy || $typeOperation == $model->nameSell);
+                if ($typeOperation !== $model->nameBuyStop && $nodeDate !== null && $a) {
 
                     if ($typeOperation == $model->nameBalance) {
                         $nodeProfit = $nodesWithTd->item(4); 
@@ -97,12 +98,18 @@ class DocumentController extends Controller
                         } else {
                             $balanceChange = (float)(str_replace(' ', '', $nodeProfit->nodeValue));
                         }
-                        $arrCheck[] = (float)str_replace(' ', '', $nodeProfit->nodeValue);
                     } 
+
                     if ($typeOperation == $model->nameBuy) {
                         $nodeProfit = $nodesWithTd->item($model->numberProfit - 1);
-                        $balanceChange = (float)$nodeProfit->nodeValue;
+                        $balanceChange = (float)(str_replace(' ', '', $nodeProfit->nodeValue));
                     }  
+
+                    if ($typeOperation == $model->nameSell) {
+                        $nodeProfit = $nodesWithTd->item($model->numberProfit - 1);
+                        $balanceChange = (float)(str_replace(' ', '', $nodeProfit->nodeValue));
+                    } 
+
                     if ($nodeProfit !== null) {
                         //$arrProfit[] = (float)$nodeProfit->nodeValue;
                         //$profit = (float)$nodeProfit->nodeValue;

@@ -14,14 +14,16 @@ class Document extends Model
     public $nameBalance;
     public $nameBuyStop;
     public $nameBuy;
+    public $nameSell;
+
 
     public function rules()
     {
         return [
-            [['typeOfFile', 'numberType', 'numberDate', 'numberProfit', 'nameBalance', 'nameBuyStop', 'nameBuy'], 'required'],
+            [['typeOfFile', 'numberType', 'numberDate', 'numberProfit', 'nameBalance', 'nameBuyStop', 'nameBuy', 'nameSell'], 'required'],
             ['typeOfFile', 'string', 'max' => 30],
             [['numberType', 'numberDate', 'numberProfit'], 'integer', 'max' => 30],
-            [['nameBalance', 'nameBuyStop', 'nameBuy'], 'string', 'max' => 60]
+            [['nameBalance', 'nameBuyStop', 'nameBuy', 'nameSell'], 'string', 'max' => 60],
         ];
     }
 
@@ -37,7 +39,8 @@ class Document extends Model
             'numberProfit' => 'Номер колонки, содержащей profit',
             'nameBalance' => 'Название операции типа balance',
             'nameBuyStop' => 'Название операции типа buy stop',
-            'nameBuy' => 'Название операции типа buy'
+            'nameBuy' => 'Название операции типа buy',
+            'nameSell' => 'Название операции типа sell'
         ];
     }
 

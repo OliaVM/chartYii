@@ -18,6 +18,7 @@ use yii\helpers\Url;
 	<?php echo $form->field($model, 'nameBalance')->textInput(['placeholder' => "balance"])->label('Название операции типа balance') ?>
 	<?php echo $form->field($model, 'nameBuyStop')->textInput(['placeholder' => "buy stop"])->label('Название операции типа buy stop') ?>
 	<?php echo $form->field($model, 'nameBuy')->textInput(['placeholder' => "buy"])->label('Название операции типа buy') ?>
+	<?php echo $form->field($model, 'nameSell')->textInput(['placeholder' => "sell"])->label('Название операции типа sell') ?>
 </div>
 
 
